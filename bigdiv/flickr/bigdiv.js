@@ -61,7 +61,7 @@ var BigDIV = (function() {
 
     bigdivHeight = total * templateHeight;
 
-    $bigdiv.css('height', bigdivHeight + 'px');
+    $bigdiv.css('height', bigdivHeight.toPrecision(21) + 'px');
 
     $bigdiv.trigger('init', [total, visibleLength]);
 
@@ -85,7 +85,7 @@ var BigDIV = (function() {
       }
     });
 
-    element.css('top', position * templateHeight + 'px');
+    element.css('top', (position * templateHeight).toPrecision(21) + 'px');
 
     return big;
   };
