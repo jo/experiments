@@ -1,0 +1,14 @@
+/* BigDIV Styles
+ * (c) 2012 Johannes J. Schmidt, TF */
+.viewport {
+  overflow: auto;
+}
+.bigdiv {
+  background: transparent url(bg.png) repeat top left;
+  position: relative;
+}
+.bigdiv > * {
+  position: absolute;
+  top: 0;
+  left: 0;
+}

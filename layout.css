@@ -1,0 +1,27 @@
+/* Examples Layout 
+ * (c) 2012 Johannes J. Schmidt, TF */
+html, body {
+  height: 100%;
+  width: 100%;
+}
+body {
+  margin: 0;
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  box-orient: vertical;
+}
+header {
+  padding-bottom: 1ex;
+}
+article {
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  min-height: 13ex;
+}
+footer {
+  padding-top: 1ex;
+}

@@ -1,0 +1,55 @@
+<html>
+  <head>
+    <script src=jquery-1.8.0.min.js></script>
+    <script src=bigdiv.js></script>
+    <link rel=stylesheet href=../../layout.css>
+    <link rel=stylesheet href=bigdiv.css>
+    <style>
+      article {
+        overflow: auto;
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>This is a very big div</h1>
+      <p>No Garbage Collection.</p>
+    </header>
+    <article class=viewport>
+      <div id=bigdiv class=bigdiv>
+        <div>
+          <img property=image_url>
+          <h1 property=title>Yeah!</h1>
+          <p property=body>Ich bin ein Datensatz.</p>
+        </div>
+      </div>
+    </article>
+    <footer>
+      Zeile <span id=info-start>0</span>
+      bis <span id=info-end>0</span>
+      von <span id=info-total>0</span> Zeilen,
+      <span id=info-scroll>keine</span> gerendert.
+      &copy; 2012 Johannes J. Schmidt, <a href=http://die-tf.de/>TF</a>
+    </footer>
+    <script>
+      var size = 1000000,
+          div = $('#bigdiv');
+
+      $('#info-total').html(size);
+
+      div.on('render', function(e, start, end) {
+        $('#info-start').html(start);
+        $('#info-end').html(end);
+        $('#info-scroll').html(div.children().length);
+      });
+
+      BigDIV(div).view(function(index, fn) {
+        fn({
+          title: 'Element #' + index,
+          body: 'Ick bin dit ' + index + '. Element!'
+        });
+      }).size(size).render(0);
+    </script>
+  </body>
+</html>

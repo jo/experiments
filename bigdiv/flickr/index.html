@@ -1,0 +1,130 @@
+<html>
+  <head>
+    <meta charset=utf-8>
+    <script src=jquery-1.8.0.min.js></script>
+    <script src=underscore-min.js></script>
+    <script src=flickr.js></script>
+    <script src=bigdiv.js></script>
+    <link rel=stylesheet href=../../layout.css>
+    <link rel=stylesheet href=bigdiv.css>
+    <style>
+      header {
+        padding: 2ex 1em 3ex 16em;
+      }
+      header h1 {
+        padding: 0;
+        margin: 0;
+      }
+      header input {
+        font: inherit;
+        border: none;
+        outline: none;
+        border-bottom: 1px solid black;
+        width: 100%;
+      }
+      article {
+        overflow: auto;
+      }
+      .viewport {
+        min-height: 13ex;
+      }
+      .photo {
+        width: 100%;
+        overflow: hidden;
+        outline: none;
+      }
+      .photo .image {
+        float: left;
+        padding: 1ex 1em;
+        overflow: hidden;
+        margin-right: 1em;
+        text-align: right;
+        width: 13em;
+        height: 13ex;
+      }
+      .photo .image img {
+        max-width: 100%;
+        height: 100%;
+      }
+      .photo .body {
+        padding: 1ex 1em;
+        width: auto;
+      }
+      .photo .body h1,
+      .photo .body p {
+        margin: 0;
+        padding: 0;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+      .photo .body h1 {
+        margin: 1ex 0 2ex 0;
+      }
+      .bigdiv .footer {
+        clear: both;
+      }
+      footer {
+        padding: 2ex 1em 1ex 16em;
+      }
+    </style>
+    <style id=appstyle></style>
+  </head>
+  <body>
+    <header>
+    <h1>
+      <input id=q value=art placeholder="Sommer,Sonne" autofocus title="Kommagetrennte Tags">
+    </h1>
+    </header>
+    <article class=viewport>
+      <div id=bigdiv class=bigdiv>
+        <div class=photo tabindex=1>
+          <div class=image>
+            <img property-src=image_url src=default.png>
+          </div>
+          <div class=body>
+            <h1 property=title></h1>
+            <p property=body></p>
+          </div>
+          <div class=footer>
+          </div>
+        </div>
+      </div>
+    </article>
+    <footer>
+      Fotos <span id=info-start>0</span>
+      bis <span id=info-end>0</span>
+      von <span id=info-total>0</span> <a href=http://www.flickr.com/>Flickr</a> Fotos,
+      <span id=info-scroll>keine</span> im DOM.<br>
+      Eine Performanceuntersuchung von Johannes J. Schmidt © 2012 <a href=http://die-tf.de/>TF</a>
+    </footer>
+    <script>
+      var q = $('#q'),
+          perpage = 10,
+          div = $('#bigdiv'),
+          bigdiv = BigDIV(div);
+
+      div.on('init', function(e, total, visible) {
+        $('#info-total').html(total);
+      });
+      div.on('render', function(e, start, end) {
+        $('#info-start').html(start + 1);
+        $('#info-end').html(end + 1);
+        $('#info-scroll').html(div.children().length);
+      });
+
+      function load() {
+        var db = flickr({
+          tags: q.val(),
+          tag_mode: 'all',
+          per_page: perpage,
+          sort: 'relevance'
+        });
+
+        bigdiv.db(db).render();
+      }
+
+      q.on('change', load);
+      load();
+    </script>
+  </body>
+</html>
