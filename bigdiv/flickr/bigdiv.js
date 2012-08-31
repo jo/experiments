@@ -7,7 +7,6 @@ var BigDIV = (function() {
       $viewport,
       visibleLength,
       templateHeight,
-      bigdivHeight,
       db;
 
   function calculateLength() {
@@ -19,6 +18,17 @@ var BigDIV = (function() {
     // set visibleLength to 0 if templateHeight is 0,
     // otherwise it could be possible to render infinite number of elements
     visibleLength = templateHeight > 0 ? Math.ceil($viewport.height() / templateHeight) : 0;
+  }
+
+  // some browsers have limits on div size,
+  // ff 13.0.1 eg. 17738073px
+  function setHeight(value) {
+    $bigdiv.css('height', value + 'px');
+
+    if (!$bigdiv.height()) {
+      console.log(value + ' is too big, trying ' + (value * 0.9));
+      setHeight(value * 0.9);
+    }
   }
 
   function update() {
@@ -59,9 +69,7 @@ var BigDIV = (function() {
 
     calculateLength();
 
-    bigdivHeight = total * templateHeight;
-
-    $bigdiv.css('height', bigdivHeight.toPrecision(21) + 'px');
+    setHeight(total * templateHeight);
 
     $bigdiv.trigger('init', [total, visibleLength]);
 
@@ -85,7 +93,7 @@ var BigDIV = (function() {
       }
     });
 
-    element.css('top', (position * templateHeight).toPrecision(21) + 'px');
+    element.css('top', position * templateHeight + 'px');
 
     return big;
   };

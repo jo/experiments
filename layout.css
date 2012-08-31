@@ -2,7 +2,7 @@
  * (c) 2012 Johannes J. Schmidt, TF */
 html, body {
   height: 100%;
-  width: 100%;
+  overflow-y: hidden;
 }
 body {
   margin: 0;
@@ -21,6 +21,7 @@ article {
   -moz-box-flex: 1;
   box-flex: 1;
   min-height: 13ex;
+  overflow-y: auto;
 }
 footer {
   padding-top: 1ex;
